@@ -1,6 +1,6 @@
 from collections import Counter
 
-from src.utils import get_input_filename
+from kyubin.src.utils import get_input_filename
 
 
 def load_data(filename: str) -> tuple[list[int], list[int]]:
@@ -14,9 +14,7 @@ def load_data(filename: str) -> tuple[list[int], list[int]]:
     return left, right
 
 
-def part_one(filename: str) -> int:
-    left, right = load_data(filename)
-
+def part_one(left: list[int], right: list[int]) -> int:
     left.sort()
     right.sort()
     res = 0
@@ -26,12 +24,9 @@ def part_one(filename: str) -> int:
     return res
 
 
-def part_two(filename: str) -> int:
-    left, right = load_data(filename)
+def part_two(left: list[int], right: list[int]) -> int:
     right_counter = Counter(right)
-
     score = 0
-
     for num in left:
         if num not in right_counter:
             continue
@@ -42,6 +37,7 @@ def part_two(filename: str) -> int:
 
 if __name__ == "__main__":
     filename = get_input_filename(__file__)
-
-    print(part_one(filename))
-    print(part_two(filename))
+    left, right = load_data(filename)
+    print(part_one(left, right))
+    left, right = load_data(filename)
+    print(part_two(left, right))
