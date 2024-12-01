@@ -8,7 +8,7 @@ def calculate_difference(column1: list[int], column2: list[int]) -> int:
 def main(input_string: str) -> int:
     column1, column2 = split_input(input_string)
     column1_sorted, column2_sorted = order_columns(column1, column2)
-    calculate_difference(column1_sorted, column2_sorted)
+    return calculate_difference(column1_sorted, column2_sorted)
 
 if __name__ == "__main__":
     file_path = 'input.txt'
