@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.twenty_four.kyubin.one.main import part_one, part_two
+from src.twenty_four.one.main import part_one, part_two
 from src.utils import get_input_filename
 
 
