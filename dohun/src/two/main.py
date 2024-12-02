@@ -49,7 +49,8 @@ def q2(input_list: list) -> int:
             count += 1
         else: 
             temp = copy.deepcopy(input)
-            for i in range(len(input)): 
+            len_input = len(input)
+            for i in range(len_input): 
                 temp.pop(i)
                 remove_ok = _check_if_report_ok(temp)
                 if remove_ok: 
