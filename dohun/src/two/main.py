@@ -12,25 +12,32 @@ def load_data(filename: str) -> tuple[list[int], list[int]]:
     return input_list
 
 
-def _check_if_report_ok(input: list): 
+def _check_if_report_ok(input: list, lives = 1): 
     len_input = len(input)
     prev_diff = None
-    for i in range(len_input): 
+    
+    current_life = lives 
+    i = 0
+    while current_life >= 1 and i < len_input: 
         if i == len_input - 1: 
             return 1
-            continue
-        diff = input[i+1] - input[i]
+
+        next = i + 1
+        diff = input[next] - input[i]
         if abs(diff) >= 1 and abs(diff) <=3: 
             if prev_diff is None: 
                 prev_diff = diff
+                i = i + 1
                 continue
             if prev_diff * diff > 0: 
                 prev_diff = diff
-                continue
+                i = i + 1
             else: 
-                return 0
+                current_life -= 1
         else: 
-            return 0
+            current_life -= 1
+    
+    return 0
 
 
 def q1(input_list: list) -> int:
@@ -61,9 +68,18 @@ def q2(input_list: list) -> int:
     return count
 
 
+def q2_nice(input_list: list) -> int: 
+    count = 0
+    for input in input_list: 
+        count += _check_if_report_ok(input, lives=2)
+
+    return count 
+
+
 if __name__ == "__main__":
     filename = get_input_filename(__file__, is_test=False)
     input_list = load_data(filename)
     print(q1(input_list))
     print(q2(input_list))
+    print(q2_nice(input_list))
 
