@@ -67,7 +67,7 @@ int solve_part_one(const InputData &inputData) {
     return safe_report_count;
 }
 
-int solve_part_two(InputData &inputData) {
+int solve_part_two(const InputData &inputData) {
     int safe_report_count = 0;
     for (auto & row : inputData.data) {
         if (check_row_safe(row)) {safe_report_count++;}
