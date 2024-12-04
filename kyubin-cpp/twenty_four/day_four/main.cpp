@@ -30,9 +30,6 @@ int solve_part_one(const std::vector<std::string> &input) {
     const int num_rows = input.size();
     const int num_cols = input[0].size();
 
-    const std::vector<int> dirs = {0, 1, -1};
-    const std::vector<char> letters = {'M', 'A', 'S'};
-
     int xmas_count = 0;
 
     for (int row = 0; row < num_rows; row++) {
@@ -45,19 +42,15 @@ int solve_part_one(const std::vector<std::string> &input) {
                     if (!within_range(num_rows, num_cols, row + 3 * dr, col + 3 * dc)) {
                         continue;
                     }
-                    bool found = true;
-                    for (int i = 0; i < letters.size(); i++) {
-                        char cur = input[row + (i + 1) * dr][col + (i + 1) * dc];
-                        if (cur != letters[i]) {
-                           found = false;
-                        }
-                    }
-                    if (found) {
+
+                    std::string rest = std::string() + input[row + dr][col + dc] +
+                                       input[row + 2 * dr][col + 2 * dc] + input[row + 3 * dr][col + 3 * dc];
+
+                    if (rest == "MAS") {
                         std::cout << "Found XMAS: " << row << " " << col;
                         std::cout << " DIR: " << dr << " " << dc << std::endl;
                         xmas_count++;
                     }
-
                 }
             }
         }
@@ -68,29 +61,26 @@ int solve_part_one(const std::vector<std::string> &input) {
 int solve_part_two(const std::vector<std::string> &input) {
     const int num_rows = input.size();
     const int num_cols = input[0].size();
-
-    const std::vector<char> letters = {'M', 'A', 'S'};
+    int num_xmas = 0;
 
     // Loop through vector, check the square as if the point
     // we are at is the top left corner.
-
-    int num_xmas = 0;
-
     for (int row = 0; row < num_rows - 2; row++) {
         for (int col = 0; col < num_cols - 2; col++) {
             if (input[row][col] != 'M' && input[row][col] != 'S') {
                 continue;
             }
-
             std::string diag_one;
             diag_one = std::string() + input[row][col] + input[row + 1][col + 1] + input[row + 2][col + 2];
 
             std::string diag_two;
             diag_two = std::string() + input[row + 2][col] + input[row + 1][col + 1] + input[row][col + 2];
 
-            std::cout << diag_one << " " << diag_two << std::endl;
-
-            if (((diag_one == "MAS") or (diag_one == "SAM")) and ((diag_two == "MAS") or (diag_two == "SAM"))) {
+            // std::cout << diag_one << " " << diag_two << std::endl;
+            if (
+                ((diag_one == "MAS") or (diag_one == "SAM")) and
+                ((diag_two == "MAS") or (diag_two == "SAM"))
+            ) {
                 num_xmas++;
             }
         }
