@@ -20,7 +20,7 @@ std::string load_data() {
     return res;
 }
 
-int solve_part_one(std::string& input) {
+int solve_part_one(std::string &input) {
     std::regex pattern(R"(mul\((\d{1,3}),(\d{1,3})\))");
     auto begin = std::sregex_iterator(input.begin(), input.end(), pattern);
     auto end = std::sregex_iterator();
@@ -28,7 +28,7 @@ int solve_part_one(std::string& input) {
     int total = 0;
 
     for (auto it = begin; it != end; ++it) {
-        const std::smatch& match = *it;
+        const std::smatch &match = *it;
         int num1 = std::stoi(match[1].str());
         int num2 = std::stoi(match[2].str());
         total += num1 * num2;
@@ -36,7 +36,7 @@ int solve_part_one(std::string& input) {
     return total;
 }
 
-int solve_part_two(std::string& input) {
+int solve_part_two(std::string &input) {
     std::regex pattern(R"((don't)|(do)|mul\((\d{1,3}),(\d{1,3})\))");
     auto begin = std::sregex_iterator(input.begin(), input.end(), pattern);
     auto end = std::sregex_iterator();
@@ -45,7 +45,7 @@ int solve_part_two(std::string& input) {
     bool do_next = true;
 
     for (std::regex_iterator it = begin; it != end; ++it) {
-        const std::smatch& match = *it;
+        const std::smatch &match = *it;
 
         if (match[1].str() == "don't") {
             do_next = false;
@@ -66,8 +66,7 @@ int solve_part_two(std::string& input) {
 }
 
 
-int main()
-{
+int main() {
     std::string input = load_data();
     std::cout << solve_part_one(input) << std::endl;
     std::cout << solve_part_two(input) << std::endl;

@@ -5,12 +5,12 @@
 #include <map>
 
 struct InputData {
-    std:: vector<int> left;
-    std:: vector<int> right;
+    std::vector<int> left;
+    std::vector<int> right;
 };
 
 InputData load_data() {
-    std::ifstream file ("../input.txt");
+    std::ifstream file("../input.txt");
 
     std::vector<int> left;
     std::vector<int> right;
@@ -24,8 +24,8 @@ InputData load_data() {
     }
 
     std::string line;
-    while (std::getline (file, line)) {
-        std::istringstream is (line);
+    while (std::getline(file, line)) {
+        std::istringstream is(line);
         int x, y;
         is >> x >> y;
         data.left.push_back(x);
@@ -48,7 +48,7 @@ int solve_part_one(InputData data) {
 
 int solve_part_two(const InputData &data) {
     std::map<int, int> counter;
-    for (int key : data.right) {
+    for (int key: data.right) {
         if (counter.contains(key)) {
             counter[key]++;
         } else {
@@ -57,7 +57,7 @@ int solve_part_two(const InputData &data) {
     }
     int res = 0;
 
-    for (int val : data.left) {
+    for (int val: data.left) {
         if (counter.contains(val)) {
             res += val * counter[val];
         }

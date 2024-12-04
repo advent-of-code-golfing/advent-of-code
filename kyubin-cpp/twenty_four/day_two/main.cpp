@@ -4,13 +4,13 @@
 #include <iostream>
 
 struct InputData {
-    std:: vector<std::vector<int>> data;
+    std::vector<std::vector<int> > data;
 };
 
 InputData load_data() {
     std::ifstream file("../input.txt");
 
-    std::vector<std::vector<int>> data;
+    std::vector<std::vector<int> > data;
     InputData inputData;
     inputData.data = data;
 
@@ -33,7 +33,7 @@ InputData load_data() {
     return inputData;
 }
 
-bool check_row_safe(const std::vector<int> & row) {
+bool check_row_safe(const std::vector<int> &row) {
     // Check if a given row is safe
     // A row is safe if:
     // 1. All levels are increasing or all decreasing.
@@ -61,17 +61,16 @@ bool check_row_safe(const std::vector<int> & row) {
 
 int solve_part_one(const InputData &inputData) {
     int safe_report_count = 0;
-    for (auto & row : inputData.data) {
-        if (check_row_safe(row)) {safe_report_count++;}
+    for (auto &row: inputData.data) {
+        if (check_row_safe(row)) { safe_report_count++; }
     }
     return safe_report_count;
 }
 
 int solve_part_two(const InputData &inputData) {
     int safe_report_count = 0;
-    for (auto & row : inputData.data) {
-        if (check_row_safe(row)) {safe_report_count++;}
-        else {
+    for (auto &row: inputData.data) {
+        if (check_row_safe(row)) { safe_report_count++; } else {
             std::vector<int> copy;
             for (int i = 0; i < row.size(); i++) {
                 copy = row;
