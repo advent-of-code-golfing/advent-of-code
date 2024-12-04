@@ -44,7 +44,7 @@ int solve_part_two(std::string& input) {
     int total = 0;
     bool do_next = true;
 
-    for (auto it = begin; it != end; ++it) {
+    for (std::regex_iterator it = begin; it != end; ++it) {
         const std::smatch& match = *it;
 
         if (match[1].str() == "don't") {
