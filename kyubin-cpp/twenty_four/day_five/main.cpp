@@ -88,9 +88,9 @@ int solve_part_one(InputData &data) {
 
 int compare(const int left, const int right, std::map<int, std::vector<int> > rules) {
     // Compares left and right based on the rules.
-    // left < right -> -1
-    // left > right -> 1
-    // otherwise 0
+    // Follows convention based on C++ sort comparator
+    // returns true if left > right
+
     std::vector<int> left_rule = rules[left];
     if (std::ranges::find(left_rule, right) != left_rule.end()) {
         // There is a rule that left must appear before right,
