@@ -86,7 +86,7 @@ int solve_part_one(InputData &data) {
     return total;
 }
 
-int compare(const int left, const int right, std::map<int, std::vector<int> > rules) {
+bool compare(const int left, const int right, std::map<int, std::vector<int> > rules) {
     // Compares left and right based on the rules.
     // Follows convention based on C++ sort comparator
     // returns true if left > right
