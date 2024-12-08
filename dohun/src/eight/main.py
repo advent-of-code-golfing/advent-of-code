@@ -71,9 +71,38 @@ def q1(locations: np.array, unique_char_dict: dict()) -> int:
 
 
 def q2(locations: np.array, unique_char_dict: dict()) -> int: 
-    count = 0
+    nodes_array = np.zeros_like(locations)
+    row_len_map = len(locations)
+    col_len_map = len(locations[0])
 
-    return count
+    for char in unique_char_dict.keys(): 
+        if char == '.': 
+            continue 
+
+        num = unique_char_dict[char]
+        coordinates = np.where(locations == num)
+        coords_list = [(x, y) for x, y in zip(coordinates[0], coordinates[1])]
+        
+        for loc_pair in itertools.combinations(coords_list,2): 
+            (row_loc_1, col_loc_1), (row_loc_2, col_loc_2) = loc_pair
+            row_op = row_loc_2 - row_loc_1 
+            col_op = col_loc_2 - col_loc_1
+
+            i = 0
+            while check_conditions((row_loc_2, col_loc_2), 
+                                   (i*row_op, i*col_op), 
+                                   (row_len_map, col_len_map)): 
+                nodes_array[row_loc_2 + i*row_op, col_loc_2 + i*col_op] = 1
+                i += 1
+
+            i = 0
+            while check_conditions((row_loc_1, col_loc_1), 
+                                (-i*row_op, -i*col_op), 
+                                (row_len_map, col_len_map)): 
+                nodes_array[row_loc_1 - i*row_op, col_loc_1 - i*col_op] = 1
+                i += 1
+
+    return np.sum(nodes_array==1)
 
 
 if __name__ == "__main__":
