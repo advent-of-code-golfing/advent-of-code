@@ -1,6 +1,6 @@
 from collections import Counter
 
-from kyubin.src.utils import get_input_filename
+from src.utils import get_input_filename
 
 
 def load_data(filename: str) -> tuple[list[int], list[int]]:
@@ -36,7 +36,7 @@ def part_two(left: list[int], right: list[int]) -> int:
 
 
 if __name__ == "__main__":
-    filename = get_input_filename(__file__)
+    filename = get_input_filename(__file__, False)
     left, right = load_data(filename)
     print(part_one(left, right))
     left, right = load_data(filename)
