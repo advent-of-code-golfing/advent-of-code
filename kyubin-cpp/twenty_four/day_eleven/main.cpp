@@ -75,7 +75,7 @@ long solve_part_one(std::vector<long long> data) {
 long long get_total_after_n_blinks(
     long long val,
     int num_blinks,
-    std::map<std::tuple<long long, int>, int>& cache
+    std::map<std::tuple<long long, int>, long long>& cache
     ) {
     if (cache.contains(std::make_tuple(val, num_blinks))) {
         return cache.at(std::make_tuple(val, num_blinks));
@@ -112,7 +112,7 @@ long long get_total_after_n_blinks(
 long long solve_part_two(std::vector<long long> data) {
     long long res = 0;
 
-    std::map<std::tuple<long long, int>, int> cache;
+    std::map<std::tuple<long long, int>, long long> cache;
 
     for (auto val : data) {
         res += get_total_after_n_blinks(val, 75, cache);
