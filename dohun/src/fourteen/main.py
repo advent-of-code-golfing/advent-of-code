@@ -7,6 +7,7 @@ import copy
 import re 
 import time
 
+
 def _extract_numbers_from_block(text_block: str) -> tuple:
     # Use regex to find all numbers after '+' or '='
     numbers = re.findall(r'-?\d+', text_block)
@@ -84,6 +85,7 @@ def _check_map_for_mostly_in_one_quadrant(map: np.array, len_rows: int, len_cols
     
     return max_perc
 
+
 def q2(initial_locations: list, velocities: list, len_rows: int, len_cols: int) -> int:     
     max_densities = dict()
     for i in range(10000): 
@@ -96,10 +98,7 @@ def q2(initial_locations: list, velocities: list, len_rows: int, len_cols: int) 
         max_densities[i] = _check_map_for_mostly_in_one_quadrant(map, len_rows, len_cols)
         if max_densities[i] > 0.5: 
             print(max_densities[i])
-            np.savetxt(f'outputs/quadrant_check/{i}_iteration.txt',map,fmt='%.0f')
-    # print('hello')    
-            
-    
+            np.savetxt(f'outputs/quadrant_check/{i}_iteration.txt',map,fmt='%.0f')        
 
 
 if __name__ == "__main__":
