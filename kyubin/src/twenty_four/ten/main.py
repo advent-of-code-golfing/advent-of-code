@@ -1,55 +1,15 @@
 from collections import deque
-from dataclasses import dataclass
 
+from src.common import Vector, Map
 from src.utils import get_input_filename
 
-
-@dataclass
-class Vector:
-    row: int
-    col: int
-
-    def __eq__(self, value: object) -> bool:
-        """
-        Check if two vectors are equal
-        """
-        if not isinstance(value, Vector):
-            raise ValueError("Cannot object these objects!")
-        return self.row == value.row and self.col == value.col
-
-    def __add__(self, value: "Vector") -> "Vector":
-        """
-        Adds two vectors together
-        """
-        return Vector(self.row + value.row, self.col + value.col)
-
-    def __str__(self) -> str:
-        return f"({self.row},{self.col})"
+from typing import Any
 
 
-class TrailMap:
-    def __init__(self, map: list[list[int]], starting_points: list[Vector]) -> None:
-        self.map = map
+class TrailMap(Map):
+    def __init__(self, map: list[list[Any]], starting_points: list[Vector]):
         self.starting_points = starting_points
-        self.nrows = len(map)
-        self.ncols = len(map[0])
-
-    def within_range(self, vec: Vector) -> bool:
-        """
-        Check if Vector is within range of map
-        """
-        return (
-            vec.row >= 0
-            and vec.row < self.nrows
-            and vec.col >= 0
-            and vec.col < self.ncols
-        )
-
-    def get_val(self, vec: Vector) -> int:
-        """
-        Retrieve integer value at point Vector
-        """
-        return self.map[vec.row][vec.col]
+        return super().__init__(map)
 
 
 def load_data(filename: str) -> TrailMap:
@@ -122,7 +82,7 @@ def solve_part_two(map: TrailMap) -> int:
 
 
 if __name__ == "__main__":
-    filename = get_input_filename(__file__, False)
+    filename = get_input_filename(__file__, True)
     map = load_data(filename)
     print(solve_part_one(map))
     print(solve_part_two(map))
