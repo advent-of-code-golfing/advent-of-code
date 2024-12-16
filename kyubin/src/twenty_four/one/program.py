@@ -35,8 +35,8 @@ def part_two(left: list[int], right: list[int]) -> int:
     return score
 
 
-if __name__ == "__main__":
-    filename = get_input_filename(__file__, False)
+def run_program(test: bool) -> None:
+    filename = get_input_filename(__file__, test)
     left, right = load_data(filename)
     print(part_one(left, right))
     left, right = load_data(filename)

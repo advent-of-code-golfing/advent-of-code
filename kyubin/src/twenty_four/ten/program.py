@@ -81,8 +81,8 @@ def solve_part_two(map: TrailMap) -> int:
     return total
 
 
-if __name__ == "__main__":
-    filename = get_input_filename(__file__, True)
+def run_program(test: bool) -> None:
+    filename = get_input_filename(__file__, test)
     map = load_data(filename)
     print(solve_part_one(map))
     print(solve_part_two(map))

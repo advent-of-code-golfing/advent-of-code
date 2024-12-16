@@ -190,8 +190,8 @@ def solve_part_two(farm: Farm) -> int:
     return farm.get_cost_part_two()
 
 
-if __name__ == "__main__":
-    filename = get_input_filename(__file__, False)
+def run_program(test: bool) -> None:
+    filename = get_input_filename(__file__, test)
     farm = load_data(filename)
     print(solve_part_one(farm))
     print(solve_part_two(farm))
