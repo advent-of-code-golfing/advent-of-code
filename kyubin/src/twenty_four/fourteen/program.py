@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 import re
+import time
+from copy import deepcopy
 
 from src.common import Vector
 from src.utils import get_input_filename
-import time
+
+ROBOT_SIGN = "#"
 
 
 @dataclass
@@ -75,38 +78,40 @@ def solve_part_one(robots: list[Robot], nrows: int, ncols: int) -> int:
 
 
 def plot(robots: list[Robot], nrows: int, ncols: int) -> None:
-    vals = [["-" for _ in range(ncols)] for _ in range(nrows)]
+    vals = [[" " for _ in range(ncols)] for _ in range(nrows)]
 
     for robot in robots:
-        vals[robot.pos.row][robot.pos.col] = "O"
+        vals[robot.pos.row][robot.pos.col] = ROBOT_SIGN
 
     print("#" * (nrows + 10))
     for val in vals:
         print("".join(val))
 
 
-def check_if_easter_egg(robots: list[Robot], nrows: int, ncols: int, n: int) -> bool:
-    vals = [["-" for _ in range(ncols)] for _ in range(nrows)]
+def check_tree(robots: list[Robot], nrows: int, ncols: int, n: int) -> bool:
+    vals = [[" " for _ in range(ncols)] for _ in range(nrows)]
 
     for robot in robots:
-        vals[robot.pos.row][robot.pos.col] = "O"
+        vals[robot.pos.row][robot.pos.col] = ROBOT_SIGN
 
     # If middle n x n are all no robots, we can assume its an egg shaped form
 
-    mid_row_start = nrows // 2 - n // 2
-    mid_col_start = ncols // 2 - n // 2
+    for r in range(0, nrows - n):
+        for c in range(0, ncols - n):
+            vals_in_box = set()
+            for r2 in range(r, r + n):
+                for c2 in range(c, c + n):
+                    vals_in_box.add(vals[r2][c2])
+            if len(vals_in_box) == 1 and list(vals_in_box)[0] == ROBOT_SIGN:
+                return True
 
-    for r in range(mid_row_start, mid_row_start + n):
-        for c in range(mid_col_start, mid_col_start + n):
-            if vals[r][c] == "O":
-                return False
-    return True
+    return False
 
 
 def solve_part_two(robots: list[Robot], nrows: int, ncols: int) -> int:
-    seconds = 1
-    plot(robots, nrows, ncols)
+    seconds = 0
     while True:
+        seconds += 1
         for robot in robots:
             new_pos = robot.pos + Vector(robot.vel.row, robot.vel.col)
             new_pos.row = new_pos.row % nrows
@@ -117,18 +122,19 @@ def solve_part_two(robots: list[Robot], nrows: int, ncols: int) -> int:
                 new_pos.col += ncols
             robot.pos = new_pos
 
-        if check_if_easter_egg(robots, nrows, ncols, 15):
+        if check_tree(robots, nrows, ncols, 3):
             print(seconds)
             plot(robots, nrows, ncols)
-        seconds += 1
+            time.sleep(1)
 
 
 def run_program(test: bool) -> None:
     filename = get_input_filename(__file__, test)
     data = load_data(filename)
+    
     if test:
-        print(solve_part_one(data, 7, 11))
-        print(solve_part_two(data, 7, 11))
+        print(solve_part_one(deepcopy(data), 7, 11))
+        print(solve_part_two(deepcopy(data), 7, 11))
     else:
         print(solve_part_one(data, 103, 101))
         print(solve_part_two(data, 103, 101))
