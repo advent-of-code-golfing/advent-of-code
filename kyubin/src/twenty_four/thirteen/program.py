@@ -1,9 +1,7 @@
-import sys
 from dataclasses import dataclass
+import sys
 import re
-from math import isclose
 
-import numpy as np
 
 sys.path.append(".")
 
@@ -95,6 +93,7 @@ def solve_part_one(machines: list[Machine]) -> int:
         res += val
         # print(m, val)
     return res
+
 
 def solve_part_two(machines: list[Machine]) -> int:
     res = 0
