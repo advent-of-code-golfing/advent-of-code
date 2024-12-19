@@ -203,19 +203,6 @@ class MazeMap:
         
         return new_known_points
 
-
-    def check_new_interesting_connections(self, coord: tuple, part1_ans: int): 
-        new_known_points = self.check_connected_points(coord, compare_vs_all=True)
-        interesting_new_points = list()
-        for new_point in new_known_points: 
-            if new_point.cum_score > part1_ans: 
-                continue
-            for old_point in self.known_points_flattened(): 
-                if compare_two_points(new_point, old_point): 
-                    continue
-            interesting_new_points.append(new_point)
-        return interesting_new_points
-
     
     def calc_final_score(self, part2: bool=False): 
         potential_points = [p for p in self.known_points_flattened() if p.coord == self.ending_loc]
