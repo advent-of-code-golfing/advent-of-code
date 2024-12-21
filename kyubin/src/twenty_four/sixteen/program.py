@@ -201,15 +201,14 @@ def solve_part_two(maze: Maze) -> int | float:
     while queue:
         cur = queue.popleft()
         # Don't loop around starting point
-        if cur.pos == maze.start:
-            in_best_path.add(cur.pos)
-            continue
         in_best_path.add(cur.pos)
+        if cur.pos == maze.start:
+            continue
         score = scoreboard.get_score_object_at_vec(cur.pos)
-        next_pos = score.prev_pos[cur.dir]
+        previous_positions = score.prev_pos[cur.dir]
         # print(queue)
 
-        queue.extend(next_pos)
+        queue.extend(previous_positions)
 
     # print(in_best_path)
     
