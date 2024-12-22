@@ -11,9 +11,9 @@ class Onsen:
 
     @cache
     def pattern_possible(self, pattern: str) -> bool:
-        if not pattern:
-            return True
         for towel in self.towels:
+            if pattern == towel:
+                return True
             if pattern.startswith(towel):
                 possible = self.pattern_possible(pattern[len(towel) :])
                 if possible is True:
@@ -73,7 +73,6 @@ def solve_part_two(onsen: Onsen) -> int:
         # print(nums, pattern)
         if nums > 0:
             num_combinations += nums
-
     return num_combinations
 
 
