@@ -11,7 +11,7 @@ class Vector:
         Check if two vectors are equal
         """
         if not isinstance(value, Vector):
-            raise ValueError("Cannot object these objects!")
+            raise ValueError("Cannot compare these objects!")
         return self.row == value.row and self.col == value.col
 
     def __add__(self, value: "Vector") -> "Vector":

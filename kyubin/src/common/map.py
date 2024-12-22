@@ -28,3 +28,7 @@ class Map:
         Retrieve integer value at point Vector
         """
         return self.map[vec.row][vec.col]
+
+    def print_map(self) -> None:
+        for row in self.map:
+            print("".join(row))
