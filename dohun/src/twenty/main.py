@@ -121,7 +121,6 @@ class ComputerMaze:
         new_cheats = []
         for dist in range(1, cheat_len+1): 
             new_points = []
-            #first iteration can only find things in 1 - this only matters for part i
             if dist == 1 and part_1: 
                 neighbors = self._find_neighbors(coord)
                 for neighbor in neighbors: 
@@ -142,22 +141,18 @@ class ComputerMaze:
                         if neighbor in known_coords_dict.keys(): 
                             continue 
                         if neighbor not in new_cheats:
-                            if coord == (7,7) and neighbor == (7, 5): 
-                                print('hello')
                             new_cheats.append(neighbor)
                             if neighbor in self.cheat_available: 
                                 self.cheat_available[neighbor].append((starting_path_length + dist, coord))
                             else: 
                                 self.cheat_available[neighbor] = [(starting_path_length + dist, coord)]
                 
-                # print('dist', dist)
-                # self.display_current_checked_points(new_new_cheats)
-                # print('hello')
-                #     # if maze[neighbor] == 1: 
                 if len(new_points) == 0:
                     break
                 known_points += new_points 
                 old_points = new_points 
+
+
     def find_shortest_path(self, 
                            start_loc: tuple = None, 
                            num_cheats: int = 0, 
@@ -172,7 +167,6 @@ class ComputerMaze:
         maze = copy.deepcopy(self.maze)
         path_length = starting_path_length
         while self.end_loc not in old_known_coords: 
-            print(path_length)
             new_known_coords = list()
             all_neighbors = list()
             for coord in old_known_coords: 
