@@ -28,6 +28,3 @@ class Vector:
 
     def __hash__(self) -> int:
         return hash((self.row, self.col))
-    
-    def distance(self, other: "Vector") -> int:
-        return abs(self.row - other.row) + abs(self.col - other.col)

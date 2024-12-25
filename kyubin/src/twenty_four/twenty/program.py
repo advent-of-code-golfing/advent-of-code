@@ -4,12 +4,11 @@ from typing import Any
 
 from src.common import Vector, Map, DIRECTIONS
 from src.utils import get_input_filename
-from bisect import bisect_right
 
 
 class TrackVector(Vector):
     def __init__(self, row: int, col: int) -> None:
-        self.distance_to_end = -1
+        self.cheat_used = False
         return super().__init__(row, col)
 
 
@@ -20,15 +19,11 @@ class RaceTrack(Map):
         self.start = start
         self.end = end
         super().__init__(map)
-        self.default_distance = 0
-        self.generate_shortest_paths()
-        self.results: defaultdict[int, int] = defaultdict(int)
 
-    def generate_cheat_paths(self, max_cheat: int) -> dict[int, int]:
-        start = self.start
-        steps = 0
+    def get_shortest_path(self) -> int:
+        path_len = 1
         queue: deque[TrackVector] = deque()
-        queue.append(start)
+        queue.append(self.start)
         been: set[Vector] = set()
 
         while queue:
@@ -37,9 +32,8 @@ class RaceTrack(Map):
             for _ in range(current_level):
                 cur = queue.popleft()
                 been.add(cur)
-                self.find_cheat_paths(cur, steps, max_cheat)
                 if cur == self.end:
-                    return self.results
+                    return path_len - 1
                 for dir in DIRECTIONS:
                     next_point = cur + dir
                     next_point = TrackVector(next_point.row, next_point.col)
@@ -51,57 +45,8 @@ class RaceTrack(Map):
                         continue
                     queue.append(next_point)
 
-            steps += 1
+            path_len += 1
         raise RuntimeError
-
-    def find_cheat_paths(self, cur: TrackVector, steps: int, max_cheat: int) -> None:
-        potential_cheat_ends = [
-            vec for vec in self.distances_to_end if cur.distance(vec) <= max_cheat
-        ]
-
-        for pot_end in potential_cheat_ends:
-            total_distance_to_end = (
-                steps + cur.distance(pot_end) + pot_end.distance_to_end
-            )
-            diff = self.default_distance - total_distance_to_end
-            if diff > 0:
-                self.results[diff] += 1
-
-    def generate_shortest_paths(self) -> None:
-        """
-        Generates the shortest path from each point in the track to the end point
-        """
-        self.distances_to_end: list[TrackVector] = []
-        # We start from the end point, and navigate through the maze backwards.
-        # The number of steps from the end will naturally be the shortest path back
-
-        queue: deque[TrackVector] = deque()
-        queue.append(self.end)
-        been: set[TrackVector] = set()
-
-        num_steps = 0
-
-        while queue:
-            current_level = len(queue)
-            for _ in range(current_level):
-                cur = queue.popleft()
-                cur.distance_to_end = num_steps
-                if cur == self.start:
-                    self.default_distance = num_steps
-                self.distances_to_end.append(cur)
-                been.add(cur)
-                for dir in DIRECTIONS:
-                    next_point = TrackVector(cur.row + dir.row, cur.col + dir.col)
-                    if next_point in been or next_point in queue:
-                        continue
-                    if not self.within_range(next_point):
-                        continue
-                    if self.get_val(next_point) == "#":
-                        continue
-                    queue.append(next_point)
-            num_steps += 1
-
-        self.distances_to_end.sort(key=lambda x: x.distance_to_end)
 
 
 def load_data(filename: str) -> RaceTrack:
@@ -130,26 +75,31 @@ def load_data(filename: str) -> RaceTrack:
 
 def solve_part_one(track: RaceTrack) -> int:
     # This is same as saying we can change a wall "#" to a path "."
-    # for dist in track.distances_to_end:
-    #     print(dist, dist.distance_to_end)
-    res = track.generate_cheat_paths(2)
-    total = 0
+    counts: dict[int, int] = defaultdict(int)
+    orig_time = track.get_shortest_path()
 
-    for time_saved, count in res.items():
-        if time_saved >= 100:
-            total += count
+    for row in range(track.nrows):
+        print(row)
+        for col in range(track.ncols):
+            if track.get_val(Vector(row, col)) != "#":
+                continue
+            new_track = deepcopy(track)
+            # Make the wall a track
+            new_track.map[row][col] = "."
+            new_time = new_track.get_shortest_path()
+            diff = orig_time - new_time
+            counts[diff] += 1
+
+    total = 0
+    for k, v in counts.items():
+        if k >= 100:
+            total += v
 
     return total
 
 
 def solve_part_two(track: RaceTrack) -> int:
-    res = track.generate_cheat_paths(20)
-    total = 0
-
-    for time_saved, count in res.items():
-        if time_saved >= 100:
-            total += count
-    return total
+    return 0
 
 
 def run(test: bool) -> None:
