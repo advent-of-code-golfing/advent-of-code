@@ -1,5 +1,5 @@
 from src.utils import get_input_filename
-import numpy as np 
+import numpy as np
 
 
 def load_data(filename: str) -> tuple[list[int], list[int]]:
@@ -17,19 +17,19 @@ def q1(left: list, right: list) -> int:
     left.sort()
     right.sort()
 
-    dist = sum([abs(x - y) for x, y, in zip(left, right)]) 
-    return dist 
+    dist = sum([abs(x - y) for x, y, in zip(left, right)])
+    return dist
 
 
-def q2(left: list, right: list) -> int: 
+def q2(left: list, right: list) -> int:
     left = np.array(left)
     right = np.array(right)
 
     score = 0
-    for i in left: 
+    for i in left:
         matches = int(sum(i == right))
-        score += matches * i 
-    
+        score += matches * i
+
     return score
 
 
