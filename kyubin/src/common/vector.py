@@ -20,9 +20,12 @@ class Vector:
         """
         return Vector(self.row + value.row, self.col + value.col)
 
+    def __sub__(self, value: "Vector") -> "Vector":
+        return Vector(self.row - value.row, self.col - value.col)
+
     def __str__(self) -> str:
         return f"({self.row},{self.col})"
-    
+
     def __repr__(self) -> str:
         return f"Vector({self.row},{self.col})"
 
