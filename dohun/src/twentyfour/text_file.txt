@@ -1,0 +1,51 @@
+x00 y00
+
+z00 -> 0 0 0
+       1 1 0
+       0 1 1
+       1 0 1
+
+z00 -> x00 XOR y00
+
+z01 -> (X01 XOR Y01) XOR (x00 and y00)
+
+bdk XOR rsq -> z01
+x00 AND y00 -> bdk
+y01 XOR x01 -> rsq
+
+z02 -> (X02 XOR y02) XOR (X01 AND Y01) XOR (XO1 AND (X00 XOR Y00)) XOR (Y01 AND (X00 XOR Y00))
+
+
+27 tpc 
+y27 XOR x27 -> tpc
+tpc OR rmv -> ntn
+ntn AND dtn -> wsm
+fnj OR wsm -> ksv
+scf XOR ksv -> z29
+
+rvf XOR dkb -> z27
+
+fhp, z20
+
+pns AND tsc -> z20
+x20 XOR y20 -> pns
+qgq OR qpp -> tsc
+y19 AND x19 -> qgq
+chf AND gdq 
+
+
+gdq XOR chf -> z19
+chf AND gdq -> qpp
+
+
+hmk
+z16
+tpc (for z27)
+wkw (for z34)
+
+wkw OR jgr -> z33
+
+z33, fcd
+
+
+
