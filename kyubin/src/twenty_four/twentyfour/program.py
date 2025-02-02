@@ -162,6 +162,8 @@ def solve_part_two(data: InputData) -> int:
     # X_i AND C_{i - 1} = T_i
     # Then we know A_i OR T_i = C_i
 
+    # This was added one by one specifically for my case, after running multiple times
+    # and checking where it breaks
     changes = {
         ("nnf", "z09"),
         ("nhs", "z20"),
